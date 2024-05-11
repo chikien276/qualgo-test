@@ -1,6 +1,6 @@
 CREATE TABLE channel_message
 (
-    id                  BIGINT      NOT NULL PRIMARY KEY,
+    id                  BIGINT      GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     sender_user_info_id BIGINT      NOT NULL,
     chat_channel_id     BIGINT      NOT NULL,
     content_type        VARCHAR(63) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE channel_message
 
 CREATE TABLE chat_channel
 (
-    id                   BIGINT       NOT NULL PRIMARY KEY,
+    id                   BIGINT       GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name                 VARCHAR(255) NOT NULL,
     creator_user_info_id BIGINT NOT NULL,
     version              INT          NOT NULL DEFAULT 0,

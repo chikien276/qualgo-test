@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 public class ChatChannel extends BaseEntity {
 
     @Setter
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     Long id;
 
     String name;

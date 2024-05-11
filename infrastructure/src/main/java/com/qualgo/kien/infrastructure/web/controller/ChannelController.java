@@ -3,14 +3,19 @@ package com.qualgo.kien.infrastructure.web.controller;
 import com.qualgo.kien.application.command.CreateChannelCommand;
 import com.qualgo.kien.application.command.DeleteMessageCommand;
 import com.qualgo.kien.application.command.SendMessageCommand;
+import com.qualgo.kien.application.dto.PageChannelMessage;
+import com.qualgo.kien.application.exception.ForbiddenException;
+import com.qualgo.kien.application.query.ChannelMessagesQuery;
 import com.qualgo.kien.application.query.ChannelsQuery;
+import com.qualgo.kien.domain.entity.ChannelMessage;
 import com.qualgo.kien.domain.entity.ChatChannel;
 import com.qualgo.kien.infrastructure.web.controller.request.CreateChannelRequest;
 import com.qualgo.kien.infrastructure.web.controller.request.SendMessageRequest;
-import com.qualgo.kien.application.exception.ForbiddenException;
+import com.qualgo.kien.infrastructure.web.controller.response.PageResponse;
 import com.qualgo.kien.infrastructure.web.filter.MyUserDetail;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -74,6 +79,31 @@ public class ChannelController {
             .contentType(request.getContentType())
             .content(request.getContent())
             .build());
+  }
+
+  @GetMapping("/{channelId}/messages")
+  public PageResponse<ChannelMessage> getMessages(
+      @PathVariable Long channelId, @RequestParam Optional<String> pageToken)
+      throws ExecutionException, InterruptedException {
+    Long lastId = null;
+    if (pageToken.isPresent()) {
+      lastId = Long.parseLong(pageToken.get());
+    }
+
+    PageChannelMessage channelMessages =
+        queryGateway
+            .query(
+                ChannelMessagesQuery.builder()
+                    .channelId(channelId)
+                    .lastChannelMessageId(lastId)
+                    .build(),
+                PageChannelMessage.class)
+            .get();
+    return PageResponse.<ChannelMessage>builder()
+        .data(channelMessages.getMessages())
+        .pageSize(channelMessages.getPageSize())
+        .nextPageToken(channelMessages.nextPageToken())
+        .build();
   }
 
   @DeleteMapping("/{channelId}/messages/delete/{messageId}")

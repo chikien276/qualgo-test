@@ -1,6 +1,6 @@
 CREATE TABLE user_info
 (
-    id          BIGINT       NOT NULL PRIMARY KEY,
+    id          BIGINT       GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     username    VARCHAR(255) NOT NULL,
     email       VARCHAR(255) NULL,
     password    TEXT         NOT NULL,
