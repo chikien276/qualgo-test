@@ -40,7 +40,7 @@ public class UserController {
 
   @PostMapping("/login")
   @PermitAll
-  public LoginResponse login(@RequestBody@Valid LoginRequest loginRequest) {
+  public LoginResponse login(@RequestBody @Valid LoginRequest loginRequest) {
     Authentication authentication =
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(

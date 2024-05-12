@@ -2,14 +2,12 @@ package com.qualgo.kien.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-
 import java.io.Serializable;
 import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.apache.ibatis.type.JdbcType;
 
 @Getter
 @SuperBuilder

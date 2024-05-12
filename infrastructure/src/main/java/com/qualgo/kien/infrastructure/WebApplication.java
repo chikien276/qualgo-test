@@ -3,7 +3,6 @@ package com.qualgo.kien.infrastructure;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(
     scanBasePackages = {"com.qualgo.kien.application", "com.qualgo.kien.infrastructure"})

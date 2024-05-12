@@ -4,7 +4,6 @@ import com.qualgo.kien.domain.entity.UserInfo;
 import com.qualgo.kien.domain.entity.repository.UserInfoRepository;
 import com.qualgo.kien.infrastructure.web.filter.MyUserDetail;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

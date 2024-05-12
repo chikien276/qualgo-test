@@ -34,7 +34,17 @@ public class SecurityConfig {
     http.csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(
             (builder) ->
-                builder.requestMatchers("/h2/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll())
+                builder
+                    .requestMatchers(
+                        "/qualgo-ws",
+                        "/",
+                        "/main.css",
+                        "/index.html",
+                        "/app.js",
+                        "/h2/**",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**")
+                    .permitAll())
         .authorizeHttpRequests(
             auth ->
                 auth.requestMatchers(HttpMethod.POST, "/auth/register", "/auth/login").anonymous())

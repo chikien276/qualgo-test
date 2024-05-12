@@ -9,9 +9,9 @@ import lombok.*;
 @AllArgsConstructor
 public class RegisterCommand {
 
-    private String email;
+  private String email;
 
-    private String username;
+  private String username;
 
-    private String password;
+  private String password;
 }

@@ -14,17 +14,16 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChannelMessage extends BaseEntity{
-    @Setter
-    @TableId(type = IdType.AUTO)
-    Long id;
+public class ChannelMessage extends BaseEntity {
+  @Setter
+  @TableId(type = IdType.AUTO)
+  Long id;
 
-    Long senderUserInfoId;
+  Long senderUserInfoId;
 
-    Long chatChannelId;
+  Long chatChannelId;
 
-    String contentType;
+  String contentType;
 
-    String contentBody;
-
+  String contentBody;
 }

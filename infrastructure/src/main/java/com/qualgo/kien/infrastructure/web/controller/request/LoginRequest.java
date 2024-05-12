@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 public class LoginRequest {
   @Size(min = 4, max = 255)
-          @TableId()
+  @TableId()
   String username;
 
   @Size(min = 8, max = 255)

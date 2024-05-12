@@ -18,7 +18,7 @@ public class SendChatMessageHandler {
   final ChannelMessageRepository channelMessageRepository;
 
   @CommandHandler
-  public Long handle(SendMessageCommand command) throws ChannelNotFoundException {
+  public ChannelMessage handle(SendMessageCommand command) throws ChannelNotFoundException {
     ChatChannel channel = chatChannelRepository.findById(command.getChannelId());
     if (channel == null) {
       throw new ChannelNotFoundException(command.getChannelId());
@@ -32,6 +32,6 @@ public class SendChatMessageHandler {
             .build();
 
     channelMessageRepository.insert(msg);
-    return msg.getId();
+    return msg;
   }
 }

@@ -1,8 +1,7 @@
 package com.qualgo.kien.infrastructure.web.controller.response;
 
-import lombok.*;
-
 import java.util.Collection;
+import lombok.*;
 
 @Getter
 @Setter

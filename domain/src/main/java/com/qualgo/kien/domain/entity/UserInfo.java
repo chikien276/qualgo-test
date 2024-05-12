@@ -16,14 +16,13 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserInfo extends BaseEntity {
-    @Setter
-    @TableId(type = IdType.AUTO)
-    Long id;
+  @Setter
+  @TableId(type = IdType.AUTO)
+  Long id;
 
-    String email;
+  String email;
 
-    String username;
+  String username;
 
-    @Setter
-    String password;
+  @Setter String password;
 }

@@ -8,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateChannelCommand {
-    String channelName;
-    Long userId;
+  String channelName;
+  Long userId;
 }

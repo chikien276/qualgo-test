@@ -4,10 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.qualgo.kien.domain.entity.ChatChannel;
 import com.qualgo.kien.domain.entity.repository.ChatChannelRepository;
 import com.qualgo.kien.infrastructure.persistent.mapper.ChatChannelMapper;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor

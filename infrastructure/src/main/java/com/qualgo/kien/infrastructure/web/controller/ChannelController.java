@@ -1,5 +1,7 @@
 package com.qualgo.kien.infrastructure.web.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qualgo.kien.application.command.CreateChannelCommand;
 import com.qualgo.kien.application.command.DeleteMessageCommand;
 import com.qualgo.kien.application.command.SendMessageCommand;
@@ -11,6 +13,7 @@ import com.qualgo.kien.domain.entity.ChannelMessage;
 import com.qualgo.kien.domain.entity.ChatChannel;
 import com.qualgo.kien.infrastructure.web.controller.request.CreateChannelRequest;
 import com.qualgo.kien.infrastructure.web.controller.request.SendMessageRequest;
+import com.qualgo.kien.infrastructure.web.controller.response.BaseResponse;
 import com.qualgo.kien.infrastructure.web.controller.response.PageResponse;
 import com.qualgo.kien.infrastructure.web.filter.MyUserDetail;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -22,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +40,10 @@ public class ChannelController {
   final QueryGateway queryGateway;
 
   final CommandGateway commandGateway;
+
+  final SimpMessagingTemplate template;
+
+  final ObjectMapper objectMapper;
 
   @PostMapping("/create")
   public Long createChannel(@RequestBody CreateChannelRequest request) {
@@ -70,15 +78,20 @@ public class ChannelController {
   }
 
   @PostMapping("/{channelId}/send")
-  public Long sendMessage(@PathVariable Long channelId, @RequestBody SendMessageRequest request) {
+  public ChannelMessage sendMessage(
+      @PathVariable Long channelId, @RequestBody SendMessageRequest request)
+      throws JsonProcessingException {
     MyUserDetail userDetail = getUserDetail();
-    return commandGateway.sendAndWait(
-        SendMessageCommand.builder()
-            .channelId(channelId)
-            .userId(userDetail.getUserId())
-            .contentType(request.getContentType())
-            .content(request.getContent())
-            .build());
+    ChannelMessage channelMessage =
+        commandGateway.sendAndWait(
+            SendMessageCommand.builder()
+                .channelId(channelId)
+                .userId(userDetail.getUserId())
+                .contentType(request.getContentType())
+                .content(request.getContent())
+                .build());
+    template.convertAndSend("/topic/new-message", objectMapper.writeValueAsString(channelMessage));
+    return channelMessage;
   }
 
   @GetMapping("/{channelId}/messages")
@@ -107,14 +120,17 @@ public class ChannelController {
   }
 
   @DeleteMapping("/{channelId}/messages/{messageId}")
-  public Long deleteMessage(@PathVariable Long channelId, @PathVariable Long messageId) {
+  public BaseResponse<String> deleteMessage(
+      @PathVariable Long channelId, @PathVariable Long messageId) {
     MyUserDetail userDetail = getUserDetail();
-    return commandGateway.sendAndWait(
+    commandGateway.sendAndWait(
         DeleteMessageCommand.builder()
             .channelId(channelId)
             .userId(userDetail.getUserId())
             .channelId(channelId)
             .messageId(messageId)
             .build());
+    template.convertAndSend("/topic/message-deleted", String.valueOf(messageId));
+    return BaseResponse.ok();
   }
 }

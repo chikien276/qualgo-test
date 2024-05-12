@@ -8,5 +8,5 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateChannelRequest {
-    String channelName;
+  String channelName;
 }

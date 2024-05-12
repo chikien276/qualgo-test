@@ -17,11 +17,11 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class ChatChannel extends BaseEntity {
 
-    @Setter
-    @TableId(type = IdType.AUTO)
-    Long id;
+  @Setter
+  @TableId(type = IdType.AUTO)
+  Long id;
 
-    String name;
+  String name;
 
-    Long creatorUserInfoId;
+  Long creatorUserInfoId;
 }

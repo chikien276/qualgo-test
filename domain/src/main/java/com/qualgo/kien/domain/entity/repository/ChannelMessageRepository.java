@@ -1,7 +1,6 @@
 package com.qualgo.kien.domain.entity.repository;
 
 import com.qualgo.kien.domain.entity.ChannelMessage;
-
 import java.util.List;
 
 public interface ChannelMessageRepository extends BaseRepository<ChannelMessage> {
