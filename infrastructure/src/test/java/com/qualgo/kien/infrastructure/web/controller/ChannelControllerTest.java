@@ -26,8 +26,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 class ChannelControllerTest extends BaseAuthApplicationTest {
   Long channelId = null;
 
-  @Autowired
-  ChannelMessageRepository channelMessageRepository;
+  @Autowired ChannelMessageRepository channelMessageRepository;
 
   @Test
   void createChannel() throws Exception {
@@ -124,10 +123,8 @@ class ChannelControllerTest extends BaseAuthApplicationTest {
             .andExpect(status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andReturn();
-    PageResponse<ChannelMessage> responses =
-        mapper.readValue(
-            channelsResult.getResponse().getContentAsByteArray(), new TypeReference<>() {});
-    return responses;
+    return mapper.readValue(
+        channelsResult.getResponse().getContentAsByteArray(), new TypeReference<>() {});
   }
 
   @Test
