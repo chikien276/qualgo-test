@@ -1,22 +1,18 @@
 package com.qualgo.kien.infrastructure.web.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qualgo.kien.infrastructure.BaseApplicationTest;
 import com.qualgo.kien.infrastructure.web.controller.request.LoginRequest;
 import com.qualgo.kien.infrastructure.web.controller.request.RegisterRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 class UserControllerTest extends BaseApplicationTest {
-  @Autowired ObjectMapper mapper;
 
   @Test
   void shouldReturnForbidden() throws Exception {

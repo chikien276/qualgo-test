@@ -106,7 +106,7 @@ public class ChannelController {
         .build();
   }
 
-  @DeleteMapping("/{channelId}/messages/delete/{messageId}")
+  @DeleteMapping("/{channelId}/messages/{messageId}")
   public Long deleteMessage(@PathVariable Long channelId, @PathVariable Long messageId) {
     MyUserDetail userDetail = getUserDetail();
     return commandGateway.sendAndWait(
