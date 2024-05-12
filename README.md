@@ -20,3 +20,6 @@ After having maven install please run
 9. Use `GET /channels/{channelId}/messages` to query messages from channel
 10. Use `DELETE /channels/{channelId}/messages/{messageId}` to delete message from channel
 11. Access to `http://localhost:8080/` to use the demo application with websocket
+    * User will need to login before using the app
+    * After login, list channels will be showed, please select channel that you want to send message to
+    * We can also delete message using delete button for each message
