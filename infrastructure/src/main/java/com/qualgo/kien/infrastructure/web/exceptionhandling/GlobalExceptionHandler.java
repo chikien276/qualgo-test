@@ -5,6 +5,7 @@ import com.qualgo.kien.application.exception.ForbiddenException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -15,18 +16,29 @@ public class GlobalExceptionHandler {
   public ResponseEntity<?> commandError(Exception ex) {
     Throwable rootCause = ExceptionUtils.getRootCause(ex);
     if (rootCause instanceof BaseException) {
-      return baseError((BaseException) ex);
+      return baseError((BaseException) rootCause);
     }
     return new ResponseEntity<>(
         ErrorMessage.builder().errorCode(500).message(ex.getMessage()).build(),
         HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
+  @ExceptionHandler(value = MethodArgumentNotValidException.class)
+  public ResponseEntity<?> commandError(MethodArgumentNotValidException ex) {
+    Throwable rootCause = ExceptionUtils.getRootCause(ex);
+    if (rootCause instanceof BaseException) {
+      return baseError((BaseException) rootCause);
+    }
+    return new ResponseEntity<>(
+        ErrorMessage.builder().errorCode(400).message(ex.getMessage()).build(),
+        HttpStatus.BAD_REQUEST);
+  }
+
   @ExceptionHandler(value = BaseException.class)
   public ResponseEntity<?> baseError(BaseException ex) {
     return new ResponseEntity<>(
         ErrorMessage.builder().errorCode(ex.getErrorCode()).message(ex.getMessage()).build(),
-        HttpStatus.INTERNAL_SERVER_ERROR);
+        HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(value = ForbiddenException.class)
