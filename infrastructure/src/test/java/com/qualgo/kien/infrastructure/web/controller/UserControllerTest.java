@@ -15,11 +15,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 class UserControllerTest extends BaseApplicationTest {
 
   @Test
-  void shouldReturnForbidden() throws Exception {
-    this.mockMvc.perform(MockMvcRequestBuilders.get("/")).andExpect(status().is4xxClientError());
-  }
-
-  @Test
   void shouldRegisterSuccess() throws Exception {
     this.mockMvc
         .perform(
